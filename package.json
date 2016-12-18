@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "scripts": {
+    "clean": "rimraf output && rimraf .pulp-cache",
+    "install": "bower install",
+    "build": "pulp build -- --strict --censor-codes=ImplicitImport,UnusedImport,UnusedDctorExplicitImport,UnusedExplicitImport",
+    "clean-examples": "rimraf examples/output",
+    "build-examples": "./build-examples.sh",
+    "open-examples": "open examples/resources/*.html",
+    "clean-all": "npm run clean && npm run clean-examples",
+    "build-all": "npm run build && npm run build-examples",
+    "rebuild-all": "npm run clean-all && npm run build-all"
+  },
+  "devDependencies": {
+    "bower": "^1.8.0",
+    "pulp": "^10.0.0",
+    "purescript-psa": "^0.4.0",
+    "rimraf": "^2.5.4"
+  }
+}

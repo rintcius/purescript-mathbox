@@ -1,0 +1,6 @@
+**/bower_components/
+**/node_modules/
+**/output/
+**/.psc*
+/src/.webpack.js
+.browserify-cache.json
