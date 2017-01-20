@@ -16,6 +16,11 @@ instance functorField :: Functor Field where
 
 type MaybeField a = Maybe (Field a)
 
+constrName :: forall a. Field a -> String
+constrName (Val v) = "Val"
+constrName (Fun f) = "Fun"
+constrName (Sig s) = "Sig"
+
 maybeToNullable :: forall a b. (a -> b) -> Maybe (Field a) -> Nullable (Field b)
 maybeToNullable f Nothing = toNullable Nothing
 maybeToNullable f (Just p) = toNullable $ Just (map f p)

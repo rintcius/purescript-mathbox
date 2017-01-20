@@ -1,11 +1,4 @@
-/* global exports */
 "use strict";
-
-// module Mathbox.Mathbox
-
-var Either = require("Data.Either");
-var Maybe = require("Data.Maybe");
-var Field = require("Mathbox.Field");
 
 exports.trackballControls = THREE.TrackballControls;
 exports.orbitControls = THREE.OrbitControls;
@@ -39,9 +32,11 @@ exports.applyOnThree = function(f) {
 exports.jsAdd = function (ctx) {
     return function (type) {
         return function (options) {
-            return function () {
-                var splitted = split(options.value0);
-                return ctx.add(type, splitted[0], splitted[1]);
+            return function (fieldConstrName) {
+                return function () {
+                    var splitted = split(fieldConstrName, options.value0);
+                    return ctx.add(type, splitted[0], splitted[1]);
+                };
             };
         };
     };
@@ -53,13 +48,13 @@ exports.jsEnd = function (ctx) {
     };
 };
 
-var split = function(object) {
+var split = function(fieldConstrName, object) {
     var options = {};
     var binds = {};
     for(var prop in object) {
         var propVal = object[prop];
         try {
-          var v = unwrap(propVal);
+          var v = unwrap(fieldConstrName, propVal);
         } catch (e) {
           var str = JSON.stringify(object);
           console.log(str);
@@ -80,25 +75,21 @@ var split = function(object) {
 
 var signalToFun = function (signal) {
   return function(t) {
-    console.log(t);
-    console.log(signal.get());
     return signal.get();
   }
 };
 
-var unwrap = function(propVal) {
+var unwrap = function(fieldConstrName, propVal) {
     if (propVal == null) {
       return [null, null];
     }
-    console.log(propVal);
-    console.log(Object.getPrototypeOf(propVal));
-    if (propVal instanceof Field.Val) {
+    if (fieldConstrName(propVal) === 'Val') {
         return [propVal.value0, null];
     }
-    if (propVal instanceof Field.Fun) {
+    if (fieldConstrName(propVal) === 'Fun') {
       return [null, propVal.value0];
     }
-    if (propVal instanceof Field.Sig) {
+    if (fieldConstrName(propVal) === 'Sig') {
       return [null, signalToFun(propVal.value0)];
     }
     console.log(propVal);

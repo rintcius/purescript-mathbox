@@ -5,6 +5,7 @@ import Control.Monad.Eff (Eff)
 import Data.List (List(..), null)
 import Data.Maybe (Maybe(Nothing, Just))
 import Data.Nullable (Nullable, toNullable)
+import Mathbox.Field (Field, constrName)
 import Prelude (map, pure, (>>=))
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -23,7 +24,7 @@ set :: Set -> Mathbox -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
 set s m = jsSet_k m (setToNullable s)
 
 add :: JsMathboxPrimitive -> Mathbox -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
-add d m = jsAdd m (getType d) d >>= addAll (subData d)
+add d m = jsAdd m (getType d) d constrName >>= addAll (subData d)
 
 addAll :: List JsMathboxPrimitive -> Mathbox -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
 addAll Nil m = pure m
@@ -53,7 +54,7 @@ foreign import applyOnThree :: forall eff1 eff2.
                                -> Mathbox
                                -> Eff ( mathbox :: MATHBOX | eff2) Mathbox
 
-foreign import jsAdd :: Mathbox -> String -> JsMathboxPrimitive -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
+foreign import jsAdd :: forall a eff. Mathbox -> String -> JsMathboxPrimitive -> (Field a -> String) -> Eff ( mathbox :: MATHBOX | eff) Mathbox
 foreign import jsEnd :: forall eff. Mathbox -> Eff ( mathbox :: MATHBOX | eff) Mathbox
 
 foreign import jsSet_k :: Mathbox -> forall r.{ | r } -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
