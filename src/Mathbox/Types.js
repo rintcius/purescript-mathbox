@@ -1,7 +1,4 @@
-/* global exports */
 "use strict";
-
-// module Mathbox.Types
 
 var Types = MathBox.Primitives.Types.Types;
 
