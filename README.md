@@ -13,6 +13,14 @@ In case you don't know MathBox yet:
 > Built on top of Three.js and ShaderGraph, it provides a clean API to visualize mathematical
 > relationships and animate them declaratively.
 
+## Try Mathbox
+
+`purescript-mathbox` is available as a backend of try-purescript,
+which means you can play online with it without having to install anything locally:
+[try-mathbox](http://try.purescript.org/?backend=mathbox)
+
+![](./doc/resources/try-mathbox.gif)
+
 ## Examples
 
 To get started, a couple of examples have been ported from the MathBox repos.
