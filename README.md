@@ -40,3 +40,6 @@ npm run build-all
 
 open examples/resources/*.html   # in your favorite browser
 ```
+## Contributing
+
+Please feel free to file issues. However, note that I'll probably won't merge any PR's at the moment since the code in this lib is generated code (which is still private).
