@@ -1,6 +1,5 @@
 {
   "name": "purescript-mathbox",
-  "private": true,
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
