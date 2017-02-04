@@ -6,10 +6,6 @@ exports.jsColorsToData = function (colors) {
     })
 };
 
-exports.jsData = [[2.0, 0.0, 0.0], [0.0, 1.11, 0.0], [0.0, 0.0, 1.0]];
-
-exports.jsTextData = ["x", "y", "z"];
-
 exports.setThreeProps = function (three) {
     three.camera.position.set(-.15, .15, 3.6);
     three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
