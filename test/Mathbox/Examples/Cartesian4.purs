@@ -2,6 +2,7 @@ module Mathbox.Examples.Cartesian4 where
 
 import Prelude ((>>=), ($), negate, (*), (+), (-), (/))
 import Control.Monad.Eff (Eff)
+import Data.Foreign
 import Data.Function.Uncurried (runFn4, mkFn6)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
@@ -18,7 +19,7 @@ foreign import setThreeProps :: forall eff. Three -> Eff ( mathbox :: MATHBOX | 
 pi :: Number
 pi = Math.pi
 
-ex :: Emitter_6_4
+ex :: In6 Ch4 It1
 ex = mkFn6 ( \emit x y i j time -> do
        let theta = pi / 2.0 * (
                      Math.cos(time * 0.31 + Math.cos(time * 0.481 - Math.sin(time * 0.318)) + Math.sin(time * 1.179)) +
@@ -40,7 +41,7 @@ ex = mkFn6 ( \emit x y i j time -> do
        runFn4 emit x' y' z w
      )
 
-ex2 :: Emitter_6_4
+ex2 :: In6 Ch4 It1
 ex2 = mkFn6 ( \emit x y i j time -> do
        let theta = pi / 2.0 * (
                      Math.cos(time * 0.31 + Math.cos(time * 0.481 - Math.sin(time * 0.318)) + Math.sin(time * 1.179)) +
@@ -80,9 +81,9 @@ mathbox =
       (Axis $ C.mkAxis { axis = Val axis2 }) :
       (Axis $ C.mkAxis { axis = Val axis3 }) :
       (Axis $ C.mkAxis { axis = Val axis4 }) :
-      (Area $ C.mkArea { rangeX = Just $ Val [(-pi), pi], rangeY = Just $ Val $ mkVec2 (-1) 1, width = Just $ Val 32, height = Just $ Val 8, expr = Just (Val $ wrapEmitter ex), channels = Val 4 }) :
+      (Area $ C.mkArea { rangeX = Just $ Val [(-pi), pi], rangeY = Just $ Val $ mkVec2 (-1) 1, width = Just $ Val 32, height = Just $ Val 8, expr = Just (Val $ toForeign ex), channels = Val 4 }) :
       (Line $ C.mkLine { color = Val $ unsafeMkColor "#3080FF", width = Val 10.0 }) :
-      (Area $ C.mkArea { rangeX = Just $ Val [(-pi), pi], rangeY = Just $ Val $ mkVec2 (-1) 1, width = Just $ Val 96, height = Just $ Val 8, expr = Just (Val $ wrapEmitter ex2), channels = Val 4 }) :
+      (Area $ C.mkArea { rangeX = Just $ Val [(-pi), pi], rangeY = Just $ Val $ mkVec2 (-1) 1, width = Just $ Val 96, height = Just $ Val 8, expr = Just (Val $ toForeign ex2), channels = Val 4 }) :
       (Point $ C.mkPoint { color = Val $ unsafeMkColor "#C02050", size = Val 20.0 }) :
       Nil
     ) :

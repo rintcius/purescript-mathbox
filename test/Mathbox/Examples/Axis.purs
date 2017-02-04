@@ -2,6 +2,7 @@ module Mathbox.Examples.Axis where
 
 import Prelude (($), (>>=), map, (*), (+), negate)
 import Control.Monad.Eff (Eff)
+import Data.Foreign
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
 import Math as Math
@@ -14,9 +15,10 @@ import Mathbox.Mathbox
 import Mathbox.Types
 
 foreign import jsColorsToData :: {x :: JsColor, y :: JsColor, z :: JsColor } -> Data
-foreign import jsData :: Data
-foreign import jsTextData :: Data
 foreign import setThreeProps :: forall eff. Three -> Eff ( mathbox :: MATHBOX | eff) Three
+
+data' :: Foreign
+data' = toForeign [[2.0, 0.0, 0.0], [0.0, 1.11, 0.0], [0.0, 0.0, 1.0]]
 
 colors :: { x :: Color, y :: Color, z :: Color }
 colors = { x: unsafeMkColor "#FF4136", y: unsafeMkColor "#2ECC40", z: unsafeMkColor "#0074D9" }
@@ -31,8 +33,8 @@ mathbox =
     (Axis $ C.mkAxis { axis = Val axis2, color = Val colors.y }) :
     (Axis $ C.mkAxis { axis = Val axis3, color = Val colors.z }) :
     (Array_ $ C.mkArray_ { id = Just (Val "colors"), live = Val false, data = Just (Val $ jsColorsToData jsColors)}) :
-    (Array_ $ C.mkArray_ { data = Just (Val jsData), channels = Val 3, live = Val false }) :
-    (Text $ C.mkText { data = Just (Val jsTextData) }) :
+    (Array_ $ C.mkArray_ { data = Just (Val data'), channels = Val 3, live = Val false }) :
+    (Text $ C.mkText { data = Just (Val $ toForeign ["x", "y", "z"]) }) :
     (Label $ C.mkLabel { color = Val $ unsafeMkColor "#FFFFFF", colors = Just (Val $ mkSelect ["#colors"]) }) :
     Nil
   )

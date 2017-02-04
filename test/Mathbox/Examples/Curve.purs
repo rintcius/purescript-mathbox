@@ -2,6 +2,7 @@ module Mathbox.Examples.Curve where
 
 import Prelude (($), (>>=), negate, (+), (*))
 import Control.Monad.Eff (Eff)
+import Data.Foreign
 import Data.Function.Uncurried (runFn2, mkFn4)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
@@ -17,7 +18,7 @@ import Mathbox.Types
 
 foreign import setThreeProps :: forall eff. Three -> Eff ( mathbox :: MATHBOX | eff) Three
 
-ex :: Emitter_4_2
+ex :: In4 Ch2 It1
 ex = mkFn4 ( \emit x i t -> do
        let y = Math.sin(x + t) * 0.7 -- + (i%2.0)* Math.sin(x * 400000.0 + t * 5.0 + x * x * 10000.0)* 0.05
        runFn2 emit x y
@@ -31,7 +32,7 @@ mathbox =
     (Scale $ C.mkScale { divide = Val 10.0 }) :
     (Ticks $ C.mkTicks { classes = Val $ mkClasses ["foo", "bar"], width = Val 2.0 }) :
     (Grid $ C.mkGrid { divideX = Val 30.0, width = Val 1.0, opacity = Val 0.5, zBias = Val (-5.0), axes = Val $ mkSwizzle1 [1, 2] }) :
-    (Interval $ C.mkInterval { id = Just (Val "sampler"), width = Just (Val 64), expr = Just (Val $ wrapEmitter ex), channels = Val 2 }) :
+    (Interval $ C.mkInterval { id = Just (Val "sampler"), width = Just (Val 64), expr = Just (Val $ toForeign ex), channels = Val 2 }) :
     (Line $ C.mkLine { points = Val $ mkSelect ["#sampler"], color = Val $ unsafeMkColor "#3090FF", width = Val 5.0 }) :
     (Transform3 $ C.mkTransform3 { position = Val [0.0, 0.1, 0.0] }) (
       (Line $ C.mkLine { points = Val $ mkSelect ["#sampler"], color = Val $ unsafeMkColor "#3090FF", width = Val 5.0, stroke = Val StrokeDotted }) : Nil

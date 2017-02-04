@@ -1,23 +1,42 @@
 module Mathbox.Types where
 
-import Prelude (class Show, show)
+import Global as Global
 import Data.Foreign (Foreign, toForeign)
-import Data.Function.Uncurried (Fn4, Fn6, Fn5, Fn2, Fn3)
+import Data.Function.Uncurried
 import Data.Int (toNumber)
 import Data.Maybe (Maybe(..))
 import Data.Nullable (Nullable, toNullable)
-import Global as Global
+import Data.Tuple (Tuple)
+import Data.Tuple.Nested (Tuple3, Tuple4, Tuple5, Tuple6)
+import Prelude (class Show, show)
 
-type Emitter_3_3 = Fn3 (Fn3 Number Number Number Number) Number Number Number
-type Emitter_4_2 = Fn4 (Fn2 Number Number Number) Number Number Number Number
-type Emitter_4_4 = Fn4 (Fn4 Number Number Number Number Number) Number Number Number Number
-type Emitter_5_4 = Fn5 (Fn4 Number Number Number Number Number) Number Number Number Number Number
-type Emitter_6_4 = Fn6 (Fn4 Number Number Number Number Number) Number Number Number Number Number Number
+type N = Number
+
+type It1 = N
+type It2 = Tuple N N
+type It3 = Tuple3 N N N
+type It4 = Tuple4 N N N N
+type It5 = Tuple5 N N N N N
+type It6 = Tuple6 N N N N N N
+
+type Ch1 = N -> N
+type Ch2 = Fn2 N N N
+type Ch3 = Fn3 N N N N
+type Ch4 = Fn4 N N N N N
+type Ch5 = Fn5 N N N N N N
+type Ch6 = Fn6 N N N N N N N
+
+type In1 c i = c -> i
+type In2 c i = Fn2 c N i
+type In3 c i = Fn3 c N N i
+type In4 c i = Fn4 c N N N i
+type In5 c i = Fn5 c N N N N i
+type In6 c i = Fn6 c N N N N N i
+type In7 c i = Fn7 c N N N N N N i
+type In8 c i = Fn8 c N N N N N N N i
+type In9 c i = Fn9 c N N N N N N N N i
+
 type Emitter = Foreign
-
-wrapEmitter :: forall a. a -> Foreign
-wrapEmitter a = toForeign a
-
 type Func = String
 
 type Bool = Boolean
