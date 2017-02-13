@@ -74,77 +74,77 @@ module Mathbox.Classes
   , module Mathbox.Class.Data.Volume
   , module Mathbox.Class.Data.Voxel
   ) where
-import Mathbox.Class.Data.Area
-import Mathbox.Class.Data.Array
-import Mathbox.Class.Draw.Axis
-import Mathbox.Class.Data.Buffer
-import Mathbox.Class.Camera.Camera
-import Mathbox.Class.View.Cartesian
-import Mathbox.Class.View.Cartesian4
-import Mathbox.Class.Operator.Clamp
-import Mathbox.Class.Time.Clock
-import Mathbox.Class.Rtt.Compose
-import Mathbox.Class.Overlay.DOM
-import Mathbox.Class.Data.Data
-import Mathbox.Class.Draw.Face
-import Mathbox.Class.Text.Format
-import Mathbox.Class.Transform.Fragment
-import Mathbox.Class.Draw.Grid
-import Mathbox.Class.Base.Group
-import Mathbox.Class.Operator.Grow
-import Mathbox.Class.Overlay.HTML
-import Mathbox.Class.Base.Inherit
-import Mathbox.Class.Data.Interval
-import Mathbox.Class.Operator.Join
-import Mathbox.Class.Text.Label
-import Mathbox.Class.Transform.Layer
-import Mathbox.Class.Operator.Lerp
-import Mathbox.Class.Draw.Line
-import Mathbox.Class.Transform.Mask
-import Mathbox.Class.Data.Matrix
-import Mathbox.Class.Operator.Memo
-import Mathbox.Class.Present.Move
-import Mathbox.Class.Time.Now
-import Mathbox.Class.Operator.Operator
-import Mathbox.Class.Base.Parent
-import Mathbox.Class.Present.Play
-import Mathbox.Class.Draw.Point
-import Mathbox.Class.View.Polar
-import Mathbox.Class.Present.Present
-import Mathbox.Class.Rtt.RTT
-import Mathbox.Class.Operator.Readback
-import Mathbox.Class.Operator.Repeat
-import Mathbox.Class.Operator.Resample
-import Mathbox.Class.Data.Resolve
-import Mathbox.Class.Text.Retext
-import Mathbox.Class.Present.Reveal
-import Mathbox.Class.Base.Root
-import Mathbox.Class.Data.Scale
-import Mathbox.Class.Shader.Shader
-import Mathbox.Class.Operator.Slice
-import Mathbox.Class.Present.Slide
-import Mathbox.Class.Base.Source
-import Mathbox.Class.View.Spherical
-import Mathbox.Class.Operator.Split
-import Mathbox.Class.Operator.Spread
-import Mathbox.Class.Present.Step
-import Mathbox.Class.View.Stereographic
-import Mathbox.Class.View.Stereographic4
-import Mathbox.Class.Draw.Strip
-import Mathbox.Class.Operator.Subdivide
-import Mathbox.Class.Draw.Surface
-import Mathbox.Class.Operator.Swizzle
-import Mathbox.Class.Text.Text
-import Mathbox.Class.Draw.Ticks
-import Mathbox.Class.Present.Track
-import Mathbox.Class.Transform.Transform
-import Mathbox.Class.Transform.Transform3
-import Mathbox.Class.Transform.Transform4
-import Mathbox.Class.Present.Transition
-import Mathbox.Class.Operator.Transpose
-import Mathbox.Class.Base.Unit
-import Mathbox.Class.Draw.Vector
-import Mathbox.Class.Transform.Vertex
-import Mathbox.Class.View.View
-import Mathbox.Class.Data.Volume
-import Mathbox.Class.Data.Voxel
+import Mathbox.Class.Data.Area (Area, AreaG, JsArea, areaToJs, mkArea)
+import Mathbox.Class.Data.Array (Array_, Array_G, JsArray_, array_ToJs, mkArray_)
+import Mathbox.Class.Draw.Axis (Axis, AxisG, JsAxis, axisToJs, mkAxis)
+import Mathbox.Class.Data.Buffer (Buffer, BufferG, JsBuffer, bufferToJs, mkBuffer)
+import Mathbox.Class.Camera.Camera (Camera, CameraG, JsCamera, cameraToJs, mkCamera)
+import Mathbox.Class.View.Cartesian (Cartesian, CartesianG, JsCartesian, cartesianToJs, mkCartesian)
+import Mathbox.Class.View.Cartesian4 (Cartesian4, Cartesian4G, JsCartesian4, cartesian4ToJs, mkCartesian4)
+import Mathbox.Class.Operator.Clamp (Clamp, ClampG, JsClamp, clampToJs, mkClamp)
+import Mathbox.Class.Time.Clock (Clock, ClockG, JsClock, clockToJs, mkClock)
+import Mathbox.Class.Rtt.Compose (Compose, ComposeG, JsCompose, composeToJs, mkCompose)
+import Mathbox.Class.Overlay.DOM (DOM, DOMG, JsDOM, dOMToJs, mkDOM)
+import Mathbox.Class.Data.Data (Data, DataG, JsData, dataToJs, mkData)
+import Mathbox.Class.Draw.Face (Face, FaceG, JsFace, faceToJs, mkFace)
+import Mathbox.Class.Text.Format (Format, FormatG, JsFormat, formatToJs, mkFormat)
+import Mathbox.Class.Transform.Fragment (Fragment, FragmentG, JsFragment, fragmentToJs, mkFragment)
+import Mathbox.Class.Draw.Grid (Grid, GridG, JsGrid, gridToJs, mkGrid)
+import Mathbox.Class.Base.Group (Group, GroupG, JsGroup, groupToJs, mkGroup)
+import Mathbox.Class.Operator.Grow (Grow, GrowG, JsGrow, growToJs, mkGrow)
+import Mathbox.Class.Overlay.HTML (HTML, HTMLG, JsHTML, hTMLToJs, mkHTML)
+import Mathbox.Class.Base.Inherit (Inherit, InheritG, JsInherit, inheritToJs, mkInherit)
+import Mathbox.Class.Data.Interval (Interval, IntervalG, JsInterval, intervalToJs, mkInterval)
+import Mathbox.Class.Operator.Join (Join, JoinG, JsJoin, joinToJs, mkJoin)
+import Mathbox.Class.Text.Label (JsLabel, Label, LabelG, labelToJs, mkLabel)
+import Mathbox.Class.Transform.Layer (JsLayer, Layer, LayerG, layerToJs, mkLayer)
+import Mathbox.Class.Operator.Lerp (JsLerp, Lerp, LerpG, lerpToJs, mkLerp)
+import Mathbox.Class.Draw.Line (JsLine, Line, LineG, lineToJs, mkLine)
+import Mathbox.Class.Transform.Mask (JsMask, Mask, MaskG, maskToJs, mkMask)
+import Mathbox.Class.Data.Matrix (JsMatrix, Matrix, MatrixG, matrixToJs, mkMatrix)
+import Mathbox.Class.Operator.Memo (JsMemo, Memo, MemoG, memoToJs, mkMemo)
+import Mathbox.Class.Present.Move (JsMove, Move, MoveG, mkMove, moveToJs)
+import Mathbox.Class.Time.Now (JsNow, Now, NowG, mkNow, nowToJs)
+import Mathbox.Class.Operator.Operator (JsOperator, Operator, OperatorG, mkOperator, operatorToJs)
+import Mathbox.Class.Base.Parent (JsParent, Parent, ParentG, mkParent, parentToJs)
+import Mathbox.Class.Present.Play (JsPlay, Play, PlayG, mkPlay, playToJs)
+import Mathbox.Class.Draw.Point (JsPoint, Point, PointG, mkPoint, pointToJs)
+import Mathbox.Class.View.Polar (JsPolar, Polar, PolarG, mkPolar, polarToJs)
+import Mathbox.Class.Present.Present (JsPresent, Present, PresentG, mkPresent, presentToJs)
+import Mathbox.Class.Rtt.RTT (JsRTT, RTT, RTTG, mkRTT, rTTToJs)
+import Mathbox.Class.Operator.Readback (JsReadback, Readback, ReadbackG, mkReadback, readbackToJs)
+import Mathbox.Class.Operator.Repeat (JsRepeat, Repeat, RepeatG, mkRepeat, repeatToJs)
+import Mathbox.Class.Operator.Resample (JsResample, Resample, ResampleG, mkResample, resampleToJs)
+import Mathbox.Class.Data.Resolve (JsResolve, Resolve, ResolveG, mkResolve, resolveToJs)
+import Mathbox.Class.Text.Retext (JsRetext, Retext, RetextG, mkRetext, retextToJs)
+import Mathbox.Class.Present.Reveal (JsReveal, Reveal, RevealG, mkReveal, revealToJs)
+import Mathbox.Class.Base.Root (JsRoot, Root, RootG, mkRoot, rootToJs)
+import Mathbox.Class.Data.Scale (JsScale, Scale, ScaleG, mkScale, scaleToJs)
+import Mathbox.Class.Shader.Shader (JsShader, Shader, ShaderG, mkShader, shaderToJs)
+import Mathbox.Class.Operator.Slice (JsSlice, Slice, SliceG, mkSlice, sliceToJs)
+import Mathbox.Class.Present.Slide (JsSlide, Slide, SlideG, mkSlide, slideToJs)
+import Mathbox.Class.Base.Source (JsSource, Source, SourceG, mkSource, sourceToJs)
+import Mathbox.Class.View.Spherical (JsSpherical, Spherical, SphericalG, mkSpherical, sphericalToJs)
+import Mathbox.Class.Operator.Split (JsSplit, Split, SplitG, mkSplit, splitToJs)
+import Mathbox.Class.Operator.Spread (JsSpread, Spread, SpreadG, mkSpread, spreadToJs)
+import Mathbox.Class.Present.Step (JsStep, Step, StepG, mkStep, stepToJs)
+import Mathbox.Class.View.Stereographic (JsStereographic, Stereographic, StereographicG, mkStereographic, stereographicToJs)
+import Mathbox.Class.View.Stereographic4 (JsStereographic4, Stereographic4, Stereographic4G, mkStereographic4, stereographic4ToJs)
+import Mathbox.Class.Draw.Strip (JsStrip, Strip, StripG, mkStrip, stripToJs)
+import Mathbox.Class.Operator.Subdivide (JsSubdivide, Subdivide, SubdivideG, mkSubdivide, subdivideToJs)
+import Mathbox.Class.Draw.Surface (JsSurface, Surface, SurfaceG, mkSurface, surfaceToJs)
+import Mathbox.Class.Operator.Swizzle (JsSwizzle, Swizzle, SwizzleG, mkSwizzle, swizzleToJs)
+import Mathbox.Class.Text.Text (JsText, Text, TextG, mkText, textToJs)
+import Mathbox.Class.Draw.Ticks (JsTicks, Ticks, TicksG, mkTicks, ticksToJs)
+import Mathbox.Class.Present.Track (JsTrack, Track, TrackG, mkTrack, trackToJs)
+import Mathbox.Class.Transform.Transform (JsTransform, Transform, TransformG, mkTransform, transformToJs)
+import Mathbox.Class.Transform.Transform3 (JsTransform3, Transform3, Transform3G, mkTransform3, transform3ToJs)
+import Mathbox.Class.Transform.Transform4 (JsTransform4, Transform4, Transform4G, mkTransform4, transform4ToJs)
+import Mathbox.Class.Present.Transition (JsTransition, Transition, TransitionG, mkTransition, transitionToJs)
+import Mathbox.Class.Operator.Transpose (JsTranspose, Transpose, TransposeG, mkTranspose, transposeToJs)
+import Mathbox.Class.Base.Unit (JsUnit, Unit, UnitG, mkUnit, unitToJs)
+import Mathbox.Class.Draw.Vector (JsVector, Vector, VectorG, mkVector, vectorToJs)
+import Mathbox.Class.Transform.Vertex (JsVertex, Vertex, VertexG, mkVertex, vertexToJs)
+import Mathbox.Class.View.View (JsView, View, ViewG, mkView, viewToJs)
+import Mathbox.Class.Data.Volume (JsVolume, Volume, VolumeG, mkVolume, volumeToJs)
+import Mathbox.Class.Data.Voxel (JsVoxel, Voxel, VoxelG, mkVoxel, voxelToJs)
