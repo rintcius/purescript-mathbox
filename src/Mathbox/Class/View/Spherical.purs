@@ -1,7 +1,7 @@
 module Mathbox.Class.View.Spherical where
 
 import Prelude (($), map, negate)
-import Data.Maybe (Maybe(Nothing, Just))
+import Data.Maybe (Maybe(Nothing))
 import Data.Nullable (Nullable, toNullable)
 
 import Mathbox.Field
