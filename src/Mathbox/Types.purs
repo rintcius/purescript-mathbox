@@ -74,7 +74,7 @@ sansSerif = "sans-serif"
 fontToJs :: Font -> JsFont
 fontToJs (Font a) = jsMkFont a
 
-foreign import data JsFont :: *
+foreign import data JsFont :: Type
 foreign import jsMkFont :: Array String -> JsFont
 
 data Timestamp = Timestamp String --should be: Date
@@ -82,7 +82,7 @@ data Timestamp = Timestamp String --should be: Date
 timestampToJs :: Timestamp -> JsTimestamp
 timestampToJs t = jsMkTimestamp
 
-foreign import data JsTimestamp :: *
+foreign import data JsTimestamp :: Type
 foreign import jsMkTimestamp :: JsTimestamp
 
 data Classes = Classes (Array String)
@@ -94,7 +94,7 @@ mkClasses0 = Classes []
 classesToJs :: Classes -> JsClasses
 classesToJs (Classes xs) = jsMkClasses xs
 
-foreign import data JsClasses :: *
+foreign import data JsClasses :: Type
 foreign import jsMkClasses :: Array String -> JsClasses
 
 data Swizzle = Swizzle (Maybe (Array Int)) (Maybe Int)
@@ -109,7 +109,7 @@ mkSwizzle1 ls = Swizzle (Just ls) Nothing
 swizzleToJs :: Swizzle -> JsSwizzle
 swizzleToJs (Swizzle order size) = jsMkSwizzle (toNullable order) (toNullable size)
 
-foreign import data JsSwizzle :: *
+foreign import data JsSwizzle :: Type
 foreign import jsMkSwizzle :: (Nullable (Array Int)) -> (Nullable Int) -> JsSwizzle
 
 -- TODO should this be "Select String" instead?
@@ -123,7 +123,7 @@ mkSelect0 = mkSelect []
 selectToJs :: Select -> JsSelect
 selectToJs (Select ss) = jsMkSelect ss
 
-foreign import data JsSelect :: *
+foreign import data JsSelect :: Type
 foreign import jsMkSelect :: Array String -> JsSelect
 
 data Color = RgbColor Number Number Number | StringColor String
@@ -139,7 +139,7 @@ colorToJs :: Color -> JsColor
 colorToJs (RgbColor r g b) = jsMkRgbColor r g b
 colorToJs (StringColor s) = jsMkStringColor s
 
-foreign import data JsColor :: *
+foreign import data JsColor :: Type
 foreign import jsMkRgbColor :: Number -> Number -> Number -> JsColor
 foreign import jsMkStringColor :: String -> JsColor
 
@@ -156,7 +156,7 @@ wxyz = [4, 1, 2, 3]
 transposeToJs :: Transpose -> JsTranspose
 transposeToJs c = jsMkTranspose
 
-foreign import data JsTranspose :: *
+foreign import data JsTranspose :: Type
 foreign import jsMkTranspose :: JsTranspose
 
 data Round = Round (Maybe Int)
@@ -169,7 +169,7 @@ mkRound n = Round (Just n)
 roundToJs :: Round -> JsRound
 roundToJs c = jsMkRound
 
-foreign import data JsRound :: *
+foreign import data JsRound :: Type
 foreign import jsMkRound :: JsRound
 
 -- (still?) TODO https://gist.github.com/puffnfresh/c98358d6f513c31a0ef4
@@ -192,7 +192,7 @@ mkMat4 n11 n12 n13 n14 n21 n22 n23 n24 n31 n32 n33 n34 n41 n42 n43 n44 = Mat4 (t
 mat4ToJs :: Mat4 -> JsMat4
 mat4ToJs m = jsMkMat4 m
 
-foreign import data JsMat4 :: *
+foreign import data JsMat4 :: Type
 foreign import jsMkMat4 :: Mat4 -> JsMat4
 
 data Axis = Axis0 | AxisX | AxisY | AxisZ | AxisW
@@ -221,7 +221,7 @@ axisToInt AxisW = 4
 axisToJs :: Axis -> JsAxis
 axisToJs a = jsMkAxis (axisToInt a) true
 
-foreign import data JsAxis :: *
+foreign import data JsAxis :: Type
 foreign import jsMkAxis :: Int -> Boolean -> JsAxis
 
 type Vec2 = Array Number
@@ -245,11 +245,11 @@ mkEnum i is = Enum i is
 enumToJs :: Enum -> JsEnum
 enumToJs (Enum i is) = jsMkEnum i is
 
-foreign import data JsEnum :: *
+foreign import data JsEnum :: Type
 foreign import jsMkEnum :: Int -> Array Int -> JsEnum
 
-foreign import data JsEmitter :: *
-foreign import data JsFunc :: *
+foreign import data JsEmitter :: Type
+foreign import data JsFunc :: Type
 
 xyz :: Array Int
 xyz = [1, 2, 3]
@@ -269,7 +269,7 @@ instance showBlending :: Show Blending where
 blendingToJs :: Blending -> JsBlending
 blendingToJs e = jsMkBlending (show e)
 
-foreign import data JsBlending :: *
+foreign import data JsBlending :: Type
 foreign import jsMkBlending :: String -> JsBlending
 
 data Filter = FilterNearest | FilterLinearMipmapLinear | FilterLinearMipMapNearest | FilterNearestMipMapLinear | FilterLinear | FilterNearestMipMapNearest
@@ -288,7 +288,7 @@ instance showFilter :: Show Filter where
 filterToJs :: Filter -> JsFilter
 filterToJs e = jsMkFilter (show e)
 
-foreign import data JsFilter :: *
+foreign import data JsFilter :: Type
 foreign import jsMkFilter :: String -> JsFilter
 
 data Type = TypeFloat | TypeShort | TypeUnsignedInt | TypeUnsignedShort | TypeInt | TypeUnsignedByte | TypeByte
@@ -308,7 +308,7 @@ instance showType :: Show Type where
 typeToJs :: Type -> JsType
 typeToJs e = jsMkType (show e)
 
-foreign import data JsType :: *
+foreign import data JsType :: Type
 foreign import jsMkType :: String -> JsType
 
 data Scale = ScaleLinear | ScaleLog
@@ -323,7 +323,7 @@ instance showScale :: Show Scale where
 scaleToJs :: Scale -> JsScale
 scaleToJs e = jsMkScale (show e)
 
-foreign import data JsScale :: *
+foreign import data JsScale :: Type
 foreign import jsMkScale :: String -> JsScale
 
 data Mapping = MappingRelative | MappingAbsolute
@@ -338,7 +338,7 @@ instance showMapping :: Show Mapping where
 mappingToJs :: Mapping -> JsMapping
 mappingToJs e = jsMkMapping (show e)
 
-foreign import data JsMapping :: *
+foreign import data JsMapping :: Type
 foreign import jsMkMapping :: String -> JsMapping
 
 data Indexing = IndexingOriginal | IndexingFinal
@@ -353,7 +353,7 @@ instance showIndexing :: Show Indexing where
 indexingToJs :: Indexing -> JsIndexing
 indexingToJs e = jsMkIndexing (show e)
 
-foreign import data JsIndexing :: *
+foreign import data JsIndexing :: Type
 foreign import jsMkIndexing :: String -> JsIndexing
 
 data Join = JoinMiter | JoinRound | JoinBevel
@@ -369,7 +369,7 @@ instance showJoin :: Show Join where
 joinToJs :: Join -> JsJoin
 joinToJs e = jsMkJoin (show e)
 
-foreign import data JsJoin :: *
+foreign import data JsJoin :: Type
 foreign import jsMkJoin :: String -> JsJoin
 
 data Shape = ShapeCircle | ShapeSquare | ShapeDiamond | ShapeUp | ShapeDown | ShapeLeft | ShapeRight
@@ -389,7 +389,7 @@ instance showShape :: Show Shape where
 shapeToJs :: Shape -> JsShape
 shapeToJs e = jsMkShape (show e)
 
-foreign import data JsShape :: *
+foreign import data JsShape :: Type
 foreign import jsMkShape :: String -> JsShape
 
 data Stroke = StrokeSolid | StrokeDotted | StrokeDashed
@@ -405,7 +405,7 @@ instance showStroke :: Show Stroke where
 strokeToJs :: Stroke -> JsStroke
 strokeToJs e = jsMkStroke (show e)
 
-foreign import data JsStroke :: *
+foreign import data JsStroke :: Type
 foreign import jsMkStroke :: String -> JsStroke
 
 data VertexPass = VertexPassData | VertexPassView | VertexPassWorld | VertexPassEye
@@ -422,7 +422,7 @@ instance showVertexPass :: Show VertexPass where
 vertexPassToJs :: VertexPass -> JsVertexPass
 vertexPassToJs e = jsMkVertexPass (show e)
 
-foreign import data JsVertexPass :: *
+foreign import data JsVertexPass :: Type
 foreign import jsMkVertexPass :: String -> JsVertexPass
 
 data FragmentPass = FragmentPassColor | FragmentPassLight | FragmentPassRgba
@@ -438,7 +438,7 @@ instance showFragmentPass :: Show FragmentPass where
 fragmentPassToJs :: FragmentPass -> JsFragmentPass
 fragmentPassToJs e = jsMkFragmentPass (show e)
 
-foreign import data JsFragmentPass :: *
+foreign import data JsFragmentPass :: Type
 foreign import jsMkFragmentPass :: String -> JsFragmentPass
 
 data Ease = EaseLinear | EaseCosine
@@ -453,7 +453,7 @@ instance showEase :: Show Ease where
 easeToJs :: Ease -> JsEase
 easeToJs e = jsMkEase (show e)
 
-foreign import data JsEase :: *
+foreign import data JsEase :: Type
 foreign import jsMkEase :: String -> JsEase
 
 data Fit = FitX | FitY | FitContain | FitCover
@@ -470,7 +470,7 @@ instance showFit :: Show Fit where
 fitToJs :: Fit -> JsFit
 fitToJs e = jsMkFit (show e)
 
-foreign import data JsFit :: *
+foreign import data JsFit :: Type
 foreign import jsMkFit :: String -> JsFit
 
 data Anchor = AnchorFirst | AnchorMiddle | AnchorLast
@@ -486,7 +486,7 @@ instance showAnchor :: Show Anchor where
 anchorToJs :: Anchor -> JsAnchor
 anchorToJs e = jsMkAnchor (show e)
 
-foreign import data JsAnchor :: *
+foreign import data JsAnchor :: Type
 foreign import jsMkAnchor :: String -> JsAnchor
 
 data TransitionState = TransitionStateEnter | TransitionStateVisible | TransitionStateExit
@@ -502,5 +502,5 @@ instance showTransitionState :: Show TransitionState where
 transitionStateToJs :: TransitionState -> JsTransitionState
 transitionStateToJs e = jsMkTransitionState (show e)
 
-foreign import data JsTransitionState :: *
+foreign import data JsTransitionState :: Type
 foreign import jsMkTransitionState :: String -> JsTransitionState

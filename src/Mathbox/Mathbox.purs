@@ -1,7 +1,7 @@
 module Mathbox.Mathbox where
 
 import Mathbox.Classes as C
-import Control.Monad.Eff (Eff)
+import Control.Monad.Eff (Eff, kind Effect)
 import Data.List (List(..), null)
 import Data.Maybe (Maybe(Nothing, Just))
 import Data.Nullable (Nullable, toNullable)
@@ -33,15 +33,15 @@ addAll (Cons h t) m = (add h m) >>= endD h >>= addAll t
 endD :: JsMathboxPrimitive -> forall eff. Mathbox -> Eff ( mathbox :: MATHBOX | eff) Mathbox
 endD d m = if (isLeaf d) then pure m else jsEnd m
 
-foreign import data MATHBOX :: !
+foreign import data MATHBOX :: Effect
 
 type MathboxEff  a     = forall eff. Eff (mathbox :: MATHBOX | eff) a
 type MathboxEffN eff a = Eff (mathbox :: MATHBOX | eff) a
 
-foreign import data Mathbox :: *
-foreign import data Three :: *
-foreign import data Controls :: *
-foreign import data ThreeColor :: *
+foreign import data Mathbox :: Type
+foreign import data Three :: Type
+foreign import data Controls :: Type
+foreign import data ThreeColor :: Type
 
 foreign import trackballControls :: Controls
 foreign import orbitControls :: Controls
