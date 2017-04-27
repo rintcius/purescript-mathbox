@@ -1,0 +1,16 @@
+{
+    "name": "purescript-mathbox",
+    "set": "master",
+    "source": "https://github.com/rintcius/package-sets.git",
+    "depends": [
+      "console",
+      "foreign",
+      "free",
+      "globals",
+      "nullable",
+      "maps",
+      "lens",
+      "either",
+      "signal"
+    ]
+}
