@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "clean": "rimraf output && rimraf .pulp-cache",
+    "clean": "rimraf bower_components && rimraf output && rimraf .pulp-cache",
     "install": "bower install",
     "build": "pulp build -- --strict --censor-codes=ImplicitImport,UnusedImport,UnusedDctorExplicitImport,UnusedExplicitImport",
     "clean-examples": "rimraf examples/output",
@@ -12,10 +12,10 @@
     "rebuild-all": "npm run clean-all && npm run build-all"
   },
   "devDependencies": {
-    "bower": "^1.8.0",
-    "pulp": "^11.0.0",
-    "purescript": "^0.11.1",
-    "purescript-psa": "^0.5.1",
-    "rimraf": "^2.6.1"
+    "bower": "^1.8.8",
+    "pulp": "^12.4.2",
+    "purescript": "^0.12.5",
+    "purescript-psa": "^0.7.3",
+    "rimraf": "^2.6.3"
   }
 }

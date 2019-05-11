@@ -1,11 +1,11 @@
 module Mathbox.Examples.Compose where
 
 import Prelude (map, (>>=), ($), negate, (*), (+))
-import Control.Monad.Eff (Eff)
-import Data.Foreign
 import Data.Function.Uncurried (runFn4, mkFn4, runFn3, mkFn3, mkFn5)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
+import Effect (Effect)
+import Foreign
 import Math as Math
 import Prim as P
 
@@ -44,18 +44,18 @@ mathbox =
       Nil
     ) :
     (Compose $ C.mkCompose { color = Val $ unsafeMkColor "#fff", opacity = Val 0.5, zWrite = Val false }) :
-    (Area $ C.mkArea { width = Just $ Val 16, height = Just $ Val 16, rangeX = Just $ Val $ mkVec2 0 1, rangeY = Just $ Val $ mkVec2 0 1, expr = Just (Val $ toForeign ex), minFilter = Val $ FilterLinear, magFilter = Val $ FilterLinear }) :
-    (Interval $ C.mkInterval { width = Just $ Val $ 16, range = Just $ Val $ mkVec2 0 1, expr = Just (Val $ toForeign ex2), minFilter = Val $ FilterLinear, magFilter = Val $ FilterLinear }) :
+    (Area $ C.mkArea { width = Just $ Val 16, height = Just $ Val 16, rangeX = Just $ Val $ mkVec2 0 1, rangeY = Just $ Val $ mkVec2 0 1, expr = Just (Val $ unsafeToForeign ex), minFilter = Val $ FilterLinear, magFilter = Val $ FilterLinear }) :
+    (Interval $ C.mkInterval { width = Just $ Val $ 16, range = Just $ Val $ mkVec2 0 1, expr = Just (Val $ unsafeToForeign ex2), minFilter = Val $ FilterLinear, magFilter = Val $ FilterLinear }) :
     (Compose $ C.mkCompose { color = Val $ unsafeMkColor "#fff", opacity = Val 0.333, zWrite = Val false }) :
     (Area $ C.mkArea { width = Just $ Val 3, height = Just $ Val 16 }) :
-    (Interval $ C.mkInterval { width = Just $ Val $ 8, minFilter = Val $ FilterLinear, magFilter = Val $ FilterLinear, expr = Just (Val $ toForeign ex3) }) :
+    (Interval $ C.mkInterval { width = Just $ Val $ 8, minFilter = Val $ FilterLinear, magFilter = Val $ FilterLinear, expr = Just (Val $ unsafeToForeign ex3) }) :
     (Surface $ C.mkSurface { color = Val $ unsafeMkColor "#ffffff", points = Val $ mkSelect ["<<"], map = Just $ Val $ mkSelect ["<"], zBias = Val (-5.0) }) :
     (Compose $ C.mkCompose { color = Val $ unsafeMkColor "#fff", opacity = Val 0.333, zWrite = Val false }) :
     Nil
   ) :
   Nil
 
-main :: forall t. Eff ( mathbox :: MATHBOX | t ) Mathbox
+main :: Effect Mathbox
 main = do
   mkMathbox { plugins: ["core", "controls", "cursor"], controls: { klass: orbitControls } } >>=
   applyOnThree (setThreeClearColor colorWhite 1.0) >>=

@@ -1,9 +1,9 @@
 module Mathbox.Examples.Camera where
 
 import Prelude ((>>=), ($), negate, (+), (*))
-import Control.Monad.Eff (Eff)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
+import Effect (Effect)
 import Math as Math
 import Prim as P
 
@@ -25,7 +25,7 @@ mathbox =
     Nil
   )
 
-main :: forall t. Eff ( mathbox :: MATHBOX | t ) Mathbox
+main :: Effect Mathbox
 main = do
   mkMathbox { plugins: ["core"] } >>=
   applyOnThree (setThreeClearColor colorWhite 1.0) >>=

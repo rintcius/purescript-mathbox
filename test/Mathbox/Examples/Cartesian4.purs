@@ -1,11 +1,11 @@
 module Mathbox.Examples.Cartesian4 where
 
 import Prelude ((>>=), ($), negate, (*), (+), (-), (/))
-import Control.Monad.Eff (Eff)
-import Data.Foreign
 import Data.Function.Uncurried (runFn4, mkFn6)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
+import Effect (Effect)
+import Foreign
 import Math as Math
 import Prim as P
 
@@ -14,9 +14,9 @@ import Mathbox.Field
 import Mathbox.Mathbox
 import Mathbox.Types
 
-foreign import setThreeProps :: forall eff. Three -> Eff ( mathbox :: MATHBOX | eff) Three
+foreign import setThreeProps :: Three -> Effect Three
 
-pi :: Number
+pi :: P.Number
 pi = Math.pi
 
 ex :: In6 Ch4 It1
@@ -81,16 +81,16 @@ mathbox =
       (Axis $ C.mkAxis { axis = Val axis2 }) :
       (Axis $ C.mkAxis { axis = Val axis3 }) :
       (Axis $ C.mkAxis { axis = Val axis4 }) :
-      (Area $ C.mkArea { rangeX = Just $ Val [(-pi), pi], rangeY = Just $ Val $ mkVec2 (-1) 1, width = Just $ Val 32, height = Just $ Val 8, expr = Just (Val $ toForeign ex), channels = Val 4 }) :
+      (Area $ C.mkArea { rangeX = Just $ Val [(-pi), pi], rangeY = Just $ Val $ mkVec2 (-1) 1, width = Just $ Val 32, height = Just $ Val 8, expr = Just (Val $ unsafeToForeign ex), channels = Val 4 }) :
       (Line $ C.mkLine { color = Val $ unsafeMkColor "#3080FF", width = Val 10.0 }) :
-      (Area $ C.mkArea { rangeX = Just $ Val [(-pi), pi], rangeY = Just $ Val $ mkVec2 (-1) 1, width = Just $ Val 96, height = Just $ Val 8, expr = Just (Val $ toForeign ex2), channels = Val 4 }) :
+      (Area $ C.mkArea { rangeX = Just $ Val [(-pi), pi], rangeY = Just $ Val $ mkVec2 (-1) 1, width = Just $ Val 96, height = Just $ Val 8, expr = Just (Val $ unsafeToForeign ex2), channels = Val 4 }) :
       (Point $ C.mkPoint { color = Val $ unsafeMkColor "#C02050", size = Val 20.0 }) :
       Nil
     ) :
     Nil
   )
 
-main :: forall t. Eff ( mathbox :: MATHBOX | t ) Mathbox
+main :: Effect Mathbox
 main = do
   mkMathbox { plugins: ["core", "controls", "cursor"]
             , controls: { klass: orbitControls }
