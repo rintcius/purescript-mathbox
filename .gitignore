@@ -4,3 +4,4 @@
 **/.psc*
 /src/.webpack.js
 .browserify-cache.json
+package-lock.json
