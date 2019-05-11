@@ -1,11 +1,11 @@
 module Mathbox.Examples.Curve where
 
 import Prelude (($), (>>=), negate, (+), (*))
-import Control.Monad.Eff (Eff)
-import Data.Foreign
 import Data.Function.Uncurried (runFn2, mkFn4)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
+import Effect (Effect)
+import Foreign
 import Optic.Core ((.~))
 import Math as Math
 import Prim as P
@@ -16,7 +16,7 @@ import Mathbox.Lenses as L
 import Mathbox.Mathbox
 import Mathbox.Types
 
-foreign import setThreeProps :: forall eff. Three -> Eff ( mathbox :: MATHBOX | eff) Three
+foreign import setThreeProps :: Three -> Effect Three
 
 ex :: In4 Ch2 It1
 ex = mkFn4 ( \emit x i t -> do
@@ -32,7 +32,7 @@ mathbox =
     (Scale $ C.mkScale { divide = Val 10.0 }) :
     (Ticks $ C.mkTicks { classes = Val $ mkClasses ["foo", "bar"], width = Val 2.0 }) :
     (Grid $ C.mkGrid { divideX = Val 30.0, width = Val 1.0, opacity = Val 0.5, zBias = Val (-5.0), axes = Val $ mkSwizzle1 [1, 2] }) :
-    (Interval $ C.mkInterval { id = Just (Val "sampler"), width = Just (Val 64), expr = Just (Val $ toForeign ex), channels = Val 2 }) :
+    (Interval $ C.mkInterval { id = Just (Val "sampler"), width = Just (Val 64), expr = Just (Val $ unsafeToForeign ex), channels = Val 2 }) :
     (Line $ C.mkLine { points = Val $ mkSelect ["#sampler"], color = Val $ unsafeMkColor "#3090FF", width = Val 5.0 }) :
     (Transform3 $ C.mkTransform3 { position = Val [0.0, 0.1, 0.0] }) (
       (Line $ C.mkLine { points = Val $ mkSelect ["#sampler"], color = Val $ unsafeMkColor "#3090FF", width = Val 5.0, stroke = Val StrokeDotted }) : Nil
@@ -43,7 +43,7 @@ mathbox =
     Nil
   )
 
-main :: forall t. Eff ( mathbox :: MATHBOX | t ) Mathbox
+main :: Effect Mathbox
 main = do
   mkMathbox { plugins: ["core", "controls", "cursor"], controls: { klass: orbitControls } } >>=
   applyOnThree setThreeProps >>=

@@ -1,6 +1,6 @@
 module Mathbox.Lenses where
 
-import Prelude hiding (add, bind, id, map, unit, zero)
+import Prelude hiding (add, bind, map, unit, zero)
 import Optic.Core as Optic
 
 active :: forall r t. Optic.Lens' { active :: t | r } t

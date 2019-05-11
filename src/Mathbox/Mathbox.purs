@@ -1,10 +1,10 @@
 module Mathbox.Mathbox where
 
 import Mathbox.Classes as C
-import Control.Monad.Eff (Eff, kind Effect)
 import Data.List (List(..), null)
 import Data.Maybe (Maybe(Nothing, Just))
 import Data.Nullable (Nullable, toNullable)
+import Effect (Effect)
 import Mathbox.Field (Field, constrName)
 import Prelude (map, pure, (>>=))
 import Unsafe.Coerce (unsafeCoerce)
@@ -20,23 +20,18 @@ setToNullable s = { focus: toNullable s.focus, scale: toNullable s.scale }
 isLeaf :: JsMathboxPrimitive -> Boolean
 isLeaf d = null (subData d)
 
-set :: Set -> Mathbox -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
+set :: Set -> Mathbox -> Effect Mathbox
 set s m = jsSet_k m (setToNullable s)
 
-add :: JsMathboxPrimitive -> Mathbox -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
+add :: JsMathboxPrimitive -> Mathbox -> Effect Mathbox
 add d m = jsAdd m (getType d) d constrName >>= addAll (subData d)
 
-addAll :: List JsMathboxPrimitive -> Mathbox -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
+addAll :: List JsMathboxPrimitive -> Mathbox -> Effect Mathbox
 addAll Nil m = pure m
 addAll (Cons h t) m = (add h m) >>= endD h >>= addAll t
 
-endD :: JsMathboxPrimitive -> forall eff. Mathbox -> Eff ( mathbox :: MATHBOX | eff) Mathbox
+endD :: JsMathboxPrimitive -> Mathbox -> Effect Mathbox
 endD d m = if (isLeaf d) then pure m else jsEnd m
-
-foreign import data MATHBOX :: Effect
-
-type MathboxEff  a     = forall eff. Eff (mathbox :: MATHBOX | eff) a
-type MathboxEffN eff a = Eff (mathbox :: MATHBOX | eff) a
 
 foreign import data Mathbox :: Type
 foreign import data Three :: Type
@@ -46,18 +41,15 @@ foreign import data ThreeColor :: Type
 foreign import trackballControls :: Controls
 foreign import orbitControls :: Controls
 
-foreign import setThreeClearColor :: forall eff. ThreeColor -> Number -> Three -> Eff ( mathbox :: MATHBOX | eff) Three
+foreign import setThreeClearColor :: ThreeColor -> Number -> Three -> Effect Three
 
-foreign import mkMathbox :: forall r eff. { | r } -> Eff ( mathbox :: MATHBOX | eff) Mathbox
-foreign import applyOnThree :: forall eff1 eff2.
-                                  (Three -> Eff ( mathbox :: MATHBOX | eff1) Three)
-                               -> Mathbox
-                               -> Eff ( mathbox :: MATHBOX | eff2) Mathbox
+foreign import mkMathbox :: forall r. { | r } -> Effect Mathbox
+foreign import applyOnThree :: (Three -> Effect Three) -> Mathbox -> Effect Mathbox
 
-foreign import jsAdd :: forall a eff. Mathbox -> String -> JsMathboxPrimitive -> (Field a -> String) -> Eff ( mathbox :: MATHBOX | eff) Mathbox
-foreign import jsEnd :: forall eff. Mathbox -> Eff ( mathbox :: MATHBOX | eff) Mathbox
+foreign import jsAdd :: forall a. Mathbox -> String -> JsMathboxPrimitive -> (Field a -> String) -> Effect Mathbox
+foreign import jsEnd :: Mathbox -> Effect Mathbox
 
-foreign import jsSet_k :: Mathbox -> forall r.{ | r } -> forall eff. Eff ( mathbox :: MATHBOX | eff) Mathbox
+foreign import jsSet_k :: Mathbox -> forall r.{ | r } -> Effect Mathbox
 
 unsafeMkThreeColor :: String -> ThreeColor
 unsafeMkThreeColor = unsafeCoerce

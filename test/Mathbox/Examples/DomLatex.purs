@@ -1,11 +1,11 @@
 module Mathbox.Examples.DomLatex where
 
 import Prelude ((>>=), negate, ($), (*), (/), (+))
-import Control.Monad.Eff (Eff)
-import Data.Foreign
 import Data.Function.Uncurried (Fn4, mkFn4, runFn2)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
+import Effect (Effect)
+import Foreign
 import Math as Math
 import Prim as P
 
@@ -14,7 +14,7 @@ import Mathbox.Field
 import Mathbox.Mathbox
 import Mathbox.Types
 
-foreign import setThreeProps :: forall eff. Three -> Eff ( mathbox :: MATHBOX | eff) Three
+foreign import setThreeProps :: Three -> Effect Three
 foreign import htmlExpr :: Foreign -> Foreign -> Foreign -> Foreign -> Foreign
 
 ex :: In4 Ch2 It1
@@ -35,18 +35,18 @@ mathbox =
       (Axis $ C.mkAxis { zBias = Val (-10.0), end = Val true, width = Val 10.0 }) :
       (Axis $ C.mkAxis { axis = Val axis2, zBias = Val (-10.0), end = Val true, width = Val 10.0 }) :
       (Grid $ C.mkGrid { divideX = Val 30.0, width = Val 10.0, opacity = Val 0.5, zBias = Val (-10.0), axes = Val $ mkSwizzle1 [1, 3] }) :
-      (Interval $ C.mkInterval { width = Just $ Val 8, expr = Just (Val $ toForeign ex), channels = Val 2 }) :
+      (Interval $ C.mkInterval { width = Just $ Val 8, expr = Just (Val $ unsafeToForeign ex), channels = Val 2 }) :
       (Repeat $ C.mkRepeat { height = Val 3.0, depth = Val 2.0 }) :
       (Spread $ C.mkSpread { unit = Val MappingAbsolute, height = Just $ Val [0.0, 0.0, 0.5], depth = Just $ Val [0.0, 0.5, 0.0] }) :
       (Point $ C.mkPoint { color = Val $ unsafeMkColor "#3090FF", size = Val 40.0 }):
-      (HTML $ C.mkHTML { width = Just $ Val 8, height = Just $ Val 3, depth = Just $ Val 2, expr = Just $ Val $ toForeign ex2 }):
+      (HTML $ C.mkHTML { width = Just $ Val 8, height = Just $ Val 3, depth = Just $ Val 2, expr = Just $ Val $ unsafeToForeign ex2 }):
       (DOM $ C.mkDOM { snap = Val false, offset = Val [0.0, (-32.0)], depth = Val 0.5, size = Val 24.0, zoom = Val 1.0, outline = Val 2.0 }):
       Nil
     ) :
     Nil
   )
 
-main :: forall t. Eff ( mathbox :: MATHBOX | t ) Mathbox
+main :: Effect Mathbox
 main = do
   mkMathbox { plugins: ["core", "controls", "cursor", "stats"]
             , controls: { klass: orbitControls }

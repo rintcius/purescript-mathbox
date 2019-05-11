@@ -1,13 +1,13 @@
 module Mathbox.Types where
 
 import Global as Global
-import Data.Foreign (Foreign, toForeign)
 import Data.Function.Uncurried
 import Data.Int (toNumber)
 import Data.Maybe (Maybe(..))
 import Data.Nullable (Nullable, toNullable)
 import Data.Tuple (Tuple)
 import Data.Tuple.Nested (Tuple3, Tuple4, Tuple5, Tuple6)
+import Foreign (Foreign, unsafeToForeign)
 import Prelude (class Show, show)
 
 type N = Number
@@ -175,7 +175,7 @@ foreign import jsMkRound :: JsRound
 -- (still?) TODO https://gist.github.com/puffnfresh/c98358d6f513c31a0ef4
 type Data = Foreign
 mkData0 :: Foreign
-mkData0 = toForeign ""
+mkData0 = unsafeToForeign ""
 
 type Quat = Vec4
 type JsQuat = Quat

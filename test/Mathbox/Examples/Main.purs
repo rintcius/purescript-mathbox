@@ -1,9 +1,9 @@
 module Mathbox.Examples.Main where
 
 import Prelude (map, (>>=), ($), negate)
-import Control.Monad.Eff (Eff)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
+import Effect (Effect)
 import Prim as P
 
 import Mathbox.Classes as C
@@ -22,7 +22,7 @@ mathbox =
   ) :
   Nil
 
-main :: forall t. Eff ( mathbox :: MATHBOX | t ) Mathbox
+main :: Effect Mathbox
 main = do
   mkMathbox { plugins: ["core", "controls", "cursor"]
             , controls: { klass: trackballControls }

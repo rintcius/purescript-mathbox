@@ -13,14 +13,13 @@
   ],
   "dependencies": {
     "mathbox": "~0.0.5",
-    "purescript-console": "~3.0.0",
-    "purescript-foreign": "~4.0.0",
-    "purescript-free": "~4.0.0",
-    "purescript-globals": "~3.0.0",
-    "purescript-nullable": "~3.0.0",
-    "purescript-maps": "~3.0.0",
-    "purescript-lens": "~3.0.0",
-    "purescript-either": "~3.0.0",
-    "purescript-signal": "~9.0.0"
+    "purescript-console": "4.2.0",
+    "purescript-foreign": "5.0.0",
+    "purescript-free": "5.2.0",
+    "purescript-globals": "4.0.0",
+    "purescript-nullable": "4.1.1",
+    "purescript-either": "4.1.1",
+    "purescript-lens": "4.0.0",
+    "purescript-signal": "10.1.0"
   }
 }
