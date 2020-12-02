@@ -15,9 +15,9 @@ In case you don't know MathBox yet:
 
 ## Try Mathbox
 
-`purescript-mathbox` is available as a backend of try-purescript,
+~~`purescript-mathbox` is available as a backend of try-purescript,
 which means you can play online with it without having to install anything locally:
-[try-mathbox](http://try.purescript.org/?backend=mathbox)
+[try-mathbox](http://try.purescript.org/?backend=mathbox)~~ Not updated yet to new architecture of try-purescript.
 
 ![](./doc/resources/try-mathbox.gif)
 
